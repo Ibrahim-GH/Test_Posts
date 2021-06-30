@@ -21,4 +21,6 @@ Route::get('/', function () {
 ##################### Begain Route for Posts ########################################
 Route::get('create', [PostController::class,'create']);
 Route::post('store', [PostController::class,'store'])->name('posts.store');
+Route::get('all', [PostController::class,'index'])->name('posts.all');
+
 ##################### End Route for Posts ########################################

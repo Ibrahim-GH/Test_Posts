@@ -14,7 +14,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+    
+       
+        //return Offer::select('id','name','photo')->get();
+       $posts = Post::all();
+        return View('Posts.index',compact('posts'));
     }
 
     /**
@@ -25,7 +29,7 @@ class PostController extends Controller
     public function create()
     {
         return View('Posts.create');
-    }
+     }
 
     /**
      * Store a newly created resource in storage.
