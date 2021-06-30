@@ -24,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return View('Posts.create');
     }
 
     /**
@@ -33,9 +33,33 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        //
+
+        //make Validation for Posts
+      $this->validate($request,[
+            'text'=>'required',
+            'photo'=>'required',
+        ]);
+//dd('test');
+
+       if($request->hasFile('photo')){
+           $file = $request->file('photo');
+           $new_file = time().$file->getClientOriginalName();
+           $file->move('Storage/Posts/',$new_file);
+
+       }
+
+     //  $p = Post::all();
+     Post::create([ 
+         "text" =>$request->text,
+         "photo" =>'/Storage/Posts/'.$new_file,
+         // "user_id"=> Auth::id(),
+        ]);
+        
+      //  return View('welcome')->with(['success' => 'تمت اضافة العنصر بنجاح']);
+   return redirect()->back()->with(['success' => 'تمت اضافة العنصر بنجاح']);
     }
 
     /**
