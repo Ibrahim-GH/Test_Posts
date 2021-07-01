@@ -23,15 +23,15 @@
     </head>
     <body class="antialiased">
 
-    <a class="btn btn-primary" type="submit" href="{{url('create')}}" class="btn btn-primary"> Create</a>
+    <a class="btn btn-primary" type="submit" href="{{url('posts/create')}}" class="btn btn-primary"> Create</a>
 
     <table class="table">
 
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">Comment Text</th>
-        <th scope="col">Comment Photo</th>
+        <th scope="col">Post Text</th>
+        <th scope="col">Post Photo</th>
         <th scope="col">Operation</th>
     </tr>
     </thead>

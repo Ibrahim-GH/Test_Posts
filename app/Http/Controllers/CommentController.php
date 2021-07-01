@@ -81,7 +81,7 @@ class CommentController extends Controller
     {
 
        $comment = Comment::find($comment_id);
-       return view('Posts.edite',compact('comment'));
+       return view('Comments.edite',compact('comment'));
     }
 
     /**
@@ -130,7 +130,7 @@ return redirect()->back()->with(['success' => 'تمت اضافة العنصر ب
     public function delete($comment_id)
     {
        $comment = Comment::find($comment_id);
-       $coment->delete();
+       $comment->delete();
        return redirect()->back()->with(['success' => 'تمت حذف العنصر بنجاح']);
     }
 }

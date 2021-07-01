@@ -45,6 +45,11 @@
         <th scope="row">{{$comment -> id}}</th>
         <td>{{$comment ->text}}</td>
         <td><img  style="width: 90px; height: 90px;" src="{{asset($comment->photo)}}"></td>
+        <td>
+                <a href="{{url('comments/edit' , ['comment_id' =>$comment -> id])}}" class="btn btn-success"> Edit</a>
+                <a href="{{route('comment.delete',['comment_id' =>$comment -> id])}}" class="btn btn-danger"> Delete</a>
+             </td>
+
     </tr>
 @endforeach
 

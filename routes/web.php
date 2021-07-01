@@ -27,10 +27,10 @@ Route::post('store', [PostController::class,'store'])->name('posts.store');
 
 Route::get('all', [PostController::class,'index'])->name('posts.all');
 
-Route::get('posts/edit/{post_id}' , [PostController::class,'edit']);
-Route::post('posts/update/{post_id}', [PostController::class,'update'])->name('posts.update');
+Route::get('edit/{post_id}' , [PostController::class,'edit']);
+Route::post('update/{post_id}', [PostController::class,'update'])->name('posts.update');
 
-Route::get('posts/delete/{post_id}' , [PostController::class,'delete']);
+Route::get('delete/{post_id}' , [PostController::class,'delete']);
 
 });
 ##################### End Route for Posts ########################################
@@ -45,6 +45,10 @@ Route::post('store', [CommentController::class,'store'])->name('comments.store')
 
 Route::get('all', [CommentController::class,'index'])->name('comments.all');
 
+Route::get('edit/{comment_id}', [CommentController::class,'edit']);
+Route::post('update/{comment_id}', [CommentController::class,'update'])->name('comments.update');
+
+Route::get('delete/{comment_id}' , [CommentController::class,'delete'])->name('comment.delete');
 });
 
 ##################### End Route for Comments ########################################

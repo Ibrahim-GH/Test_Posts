@@ -22,23 +22,23 @@
     </head>
     <body>
 
-    <form method="POST" action="{{route('posts.update',['post_id'=> $post->id])}}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('comments.update',['comment_id'=> $comment->id])}}" enctype="multipart/form-data">
             @csrf
             <!-- {{-- <input name="_token" value="{{csrf_token()}}"> --}} -->
 
 
             <div class="form-group" >
-                <label for="exampleInputEmail1">Update The Post Text</label>
-                <input type="text" class="form-control" name="text" value="{{$post->text}}">
-                 @error('photo')
+                <label for="exampleInputEmail1">Update The Comment Text</label>
+                <input type="text" class="form-control" name="text" value="{{$comment->text}}">
+                 <!-- @error('photo')
                 <small class="form-text text-danger">{{$message}}</small>
-                @enderror
+                @enderror -->
             </div>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Update The Post photo</label>
-                <input type="file" class="form-control" name="photo" value="{{$post->photo}}">
-                <img src="{{asset($post->photo)}}" style="width: 90px; height: 90px;"/>
+                <label for="exampleInputEmail1">Update The Comment photo</label>
+                <input type="file" class="form-control" name="photo" value="{{$comment->photo}}">
+                <img src="{{asset($comment->photo)}}" style="width: 90px; height: 90px;"/>
                 <!-- @error('photo')
                 <small class="form-text text-danger">{{$message}}</small>
                 @enderror -->
