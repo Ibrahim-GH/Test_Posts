@@ -23,4 +23,10 @@ Route::get('create', [PostController::class,'create']);
 Route::post('store', [PostController::class,'store'])->name('posts.store');
 Route::get('all', [PostController::class,'index'])->name('posts.all');
 
+Route::get('posts/edit/{post_id}' , [PostController::class,'edit']);
+Route::post('posts/update/{post_id}', [PostController::class,'update'])->name('posts.update');
+
+Route::get('posts/delete/{post_id}' , [PostController::class,'delete']);
 ##################### End Route for Posts ########################################
+
+
