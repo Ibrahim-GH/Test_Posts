@@ -14,9 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-
-
-        //return Offer::select('id','name','photo')->get();
+        //select all Posts for show them
        $posts = Post::all();
         return View('Posts.index',compact('posts'));
     }

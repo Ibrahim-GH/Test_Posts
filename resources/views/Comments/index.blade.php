@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Comments</title>
+        <title>Laravel</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
     </head>
     <body class="antialiased">
 
-    <a class="btn btn-primary" type="submit" href="{{url('create')}}" class="btn btn-primary"> Create</a>
+    <a class="btn btn-primary" type="submit" href="{{url('comments/create')}}" class="btn btn-primary"> Create</a>
 
     <table class="table">
 
@@ -40,13 +40,11 @@
 
 
 
-@foreach($posts as $post)
+@foreach($comments as $comment)
     <tr>
-        <th scope="row">{{$post -> id}}</th>
-        <td>{{$post ->text}}</td>
-        <td><img  style="width: 90px; height: 90px;" src="{{asset($post->photo)}}"></td>
-        <td><a href="{{url('posts/edit', ['post_id' => $post->id])}}" class="btn btn-primary">Edit</a></td>
-        <td><a href="{{url('posts/delete', ['post_id' => $post->id])}}" class="btn btn-danger">Delete</a></td>
+        <th scope="row">{{$comment -> id}}</th>
+        <td>{{$comment ->text}}</td>
+        <td><img  style="width: 90px; height: 90px;" src="{{asset($comment->photo)}}"></td>
     </tr>
 @endforeach
 
