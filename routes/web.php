@@ -30,3 +30,11 @@ Route::get('posts/delete/{post_id}' , [PostController::class,'delete']);
 ##################### End Route for Posts ########################################
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
