@@ -16,7 +16,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'text', 'photo','created_at','updated_at',
+        'id','user_id', 'text', 'photo','created_at','updated_at',
     ];
 
     /**
@@ -32,7 +32,7 @@ class Post extends Model
     ########################### The Relation for Posts ###############################
 
     //the user hase many posts and post belong to one user
-    public function users()
+    public function user()
     {
         return $this -> belongsIo('App\Models\User','user_id','id');
     }  

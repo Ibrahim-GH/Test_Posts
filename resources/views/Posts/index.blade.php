@@ -33,6 +33,7 @@
         <th scope="col">Post Text</th>
         <th scope="col">Post Photo</th>
         <th scope="col">Operation</th>
+        <th scope="col">Comments</th>
     </tr>
     </thead>
 
@@ -47,6 +48,7 @@
         <td><img  style="width: 90px; height: 90px;" src="{{asset($post->photo)}}"></td>
         <td><a href="{{url('posts/edit', ['post_id' => $post->id])}}" class="btn btn-primary">Edit</a></td>
         <td><a href="{{url('posts/delete', ['post_id' => $post->id])}}" class="btn btn-danger">Delete</a></td>
+        <td><a href="{{url('comments/all', ['post_id' => $post->id])}}" class="btn btn-danger">This Comments</a></td>
     </tr>
 @endforeach
 

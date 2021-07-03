@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -12,10 +14,13 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($post_id)
     {
-       $comments = Comment::all();
-        return View('Comments.index',compact('comments'));
+        $post = Post::find($post_id);
+
+        $comments =$post->comments;
+
+        return View('Comments.index',compact('post', 'comments'));
     }
 
     /**
@@ -23,9 +28,10 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($post_id)
     {
-        return View('Comments.create');
+        $post = Post::find($post_id);
+        return View('Comments.create' , compact('post'));
      }
 
     /**
@@ -35,7 +41,7 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request)
+    public function store(Request $request , $post_id)
     {
 
         //make Validation for Posts
@@ -50,8 +56,12 @@ class CommentController extends Controller
            $new_file = time().$file->getClientOriginalName();
            $file->move('Storage/Comments/',$new_file);
        }
+       
 
-     Comment::create([
+      $id =  Auth::id();
+    Comment::create([
+        "user_id" => $id,
+        "post_id" => $post_id,
          "text" =>$request->text,
          "photo" =>'/Storage/Comments/'.$new_file,
         ]);

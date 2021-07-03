@@ -23,7 +23,7 @@
     </head>
     <body class="antialiased">
 
-    <a class="btn btn-primary" type="submit" href="{{url('comments/create')}}" class="btn btn-primary"> Create</a>
+    <a class="btn btn-primary" type="submit" href="{{url('comments/create',['$post_id' => $post->id])}}" class="btn btn-primary"> Create</a>
 
     <table class="table">
 

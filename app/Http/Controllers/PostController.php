@@ -53,8 +53,9 @@ class PostController extends Controller
 
        }
 
-     //  $p = Post::all();
+     $id = Auth::id();
      Post::create([
+         "user_id"=> $id,
          "text" =>$request->text,
          "photo" =>'/Storage/Posts/'.$new_file,
          // "user_id"=> Auth::id(),
@@ -134,6 +135,7 @@ return redirect()->back()->with(['success' => 'تمت اضافة العنصر ب
     public function delete($post_id)
     {
        $post = Post::find($post_id);
+       $post ->comments() -> delete();
        $post->delete();
        return redirect()->back()->with(['success' => 'تمت حذف العنصر بنجاح']);
     }

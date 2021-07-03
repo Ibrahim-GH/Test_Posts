@@ -40,10 +40,10 @@ Route::get('delete/{post_id}' , [PostController::class,'delete']);
 ##################### Begain Route for Comments ########################################
 Route::group(['prefix' => 'comments'], function () {
 
-Route::get('create', [CommentController::class,'create']);
-Route::post('store', [CommentController::class,'store'])->name('comments.store');
+Route::get('create/{post_id}', [CommentController::class,'create']);
+Route::post('store/{post_id}', [CommentController::class,'store'])->name('comments.store');
 
-Route::get('all', [CommentController::class,'index'])->name('comments.all');
+Route::get('all/{post_id}', [CommentController::class,'index'])->name('comments.all');
 
 Route::get('edit/{comment_id}', [CommentController::class,'edit']);
 Route::post('update/{comment_id}', [CommentController::class,'update'])->name('comments.update');

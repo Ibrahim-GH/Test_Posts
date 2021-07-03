@@ -22,7 +22,7 @@
     </head>
     <body >
       
-    <form method="POST" action="{{route('comments.store')}}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('comments.store',['post_id' => $post->id])}}" enctype="multipart/form-data">
             @csrf
             <!-- {{-- <input name="_token" value="{{csrf_token()}}"> --}} -->
 
