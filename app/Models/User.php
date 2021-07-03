@@ -40,4 +40,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    
+    ########################### The Relation for Users ###############################
+
+
+    //the user hase many post and post belong to one user
+    public function posts()
+    {
+       return $this -> hasMany('App\Models\Post','user_id','id');
+    }  
+
+    //the user hase many comment and comment belong to one user
+    public function comments()
+    {
+      return $this -> hasMany('App\Models\Comment','user_id','id');
+    }  
+
+     //the user hase many like and like belong to one user
+   public function likes()
+   {
+      return $this -> hasMany('App\Models\Likes','user_id','id');
+   }  
 }
