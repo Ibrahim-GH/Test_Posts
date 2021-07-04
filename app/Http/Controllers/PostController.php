@@ -98,7 +98,6 @@ class PostController extends Controller
      */
     public function update(Request $request, $post_id)
     {
-
        //make Validation for Posts
        $this->validate($request,[
         'text'=>'required',
@@ -139,4 +138,9 @@ return redirect()->back()->with(['success' => 'تمت اضافة العنصر ب
        $post->delete();
        return redirect()->back()->with(['success' => 'تمت حذف العنصر بنجاح']);
     }
+
+public  function getLike(){
+
+}
+
 }

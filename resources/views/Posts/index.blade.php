@@ -48,7 +48,8 @@
         <td><img  style="width: 90px; height: 90px;" src="{{asset($post->photo)}}"></td>
         <td><a href="{{url('posts/edit', ['post_id' => $post->id])}}" class="btn btn-primary">Edit</a></td>
         <td><a href="{{url('posts/delete', ['post_id' => $post->id])}}" class="btn btn-danger">Delete</a></td>
-        <td><a href="{{url('comments/all', ['post_id' => $post->id])}}" class="btn btn-danger">This Comments</a></td>
+        <td><a href="{{url('comments/all', ['post_id' => $post->id])}}" class="btn btn-danger">Comments</a></td>
+        <td><a href="{{url('posts/likes', ['post_id' => $post->id])}}" class="btn btn-danger">Like</a></td>
     </tr>
 @endforeach
 

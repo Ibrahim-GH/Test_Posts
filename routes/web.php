@@ -32,6 +32,7 @@ Route::post('update/{post_id}', [PostController::class,'update'])->name('posts.u
 
 Route::get('delete/{post_id}' , [PostController::class,'delete']);
 
+Route::get('likes/{post_id}', 'PostController@getLike') ->middleware('auth');
 });
 ##################### End Route for Posts ########################################
 
