@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,7 +34,11 @@ Route::post('update/{post_id}', [PostController::class,'update'])->name('posts.u
 
 Route::get('delete/{post_id}' , [PostController::class,'delete']);
 
-Route::get('likes/{post_id}', 'PostController@getLike') ->middleware('auth');
+//Route::get('likes/{post_id}', 'PostController@getLike') ->middleware('auth');
+
+//Route::get('like/{post_id}',  [LikeController::class,'likes']);
+
+Route::get('like/{post_id}',  [PostController::class,'viewLike']);
 });
 ##################### End Route for Posts ########################################
 

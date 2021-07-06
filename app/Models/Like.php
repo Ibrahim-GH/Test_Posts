@@ -25,7 +25,7 @@ class Like extends Model
 
 
 
-    //the post hase many like and like belong to one post 
+    //the post hase many like and like belong to one post
     public function posts()
     {
         return $this -> belongsTo('App\Models\Post' , 'post_id' , 'id');
@@ -37,5 +37,6 @@ class Like extends Model
     {
         return $this -> belongsTo('App\Models\User' , 'user_id' , 'id');
     }
+
 
 }

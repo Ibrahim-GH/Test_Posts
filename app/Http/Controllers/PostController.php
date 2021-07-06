@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -15,10 +16,22 @@ class PostController extends Controller
     public function index()
     {
         //select all Posts for show them
-       $posts = Post::all();
+        $posts = Post::all();
         return View('Posts.index',compact('posts'));
     }
 
+    public function viewLike($post_id)
+    {
+
+        $like = new LikeController();
+        $like->likes($post_id);
+
+        $post = Post::find($post_id);
+        $likCtr = Like::where(['post_id' => $post->id])->count();
+
+        $post->comments()->get();
+        return view('Posts.DetailsPost',compact('post','likCtr'));
+    }
     /**
      * Show the form for creating a new resource.
      *
