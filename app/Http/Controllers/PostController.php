@@ -16,10 +16,11 @@ class PostController extends Controller
     public function index()
     {
         //select all Posts for show them
-        $posts = Post::all();
+        $posts = Post::select('id','title','text','photo')->paginate(2);
         return View('Posts.index',compact('posts'));
     }
 
+    // Like Post by User
     public function viewLike($post_id)
     {
 
@@ -32,6 +33,9 @@ class PostController extends Controller
         $post->comments()->get();
         return view('Posts.DetailsPost',compact('post','likCtr'));
     }
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -54,6 +58,7 @@ class PostController extends Controller
 
         //make Validation for Posts
       $this->validate($request,[
+          'title'=>'required',
             'text'=>'required',
             'photo'=>'required',
         ]);
@@ -69,6 +74,7 @@ class PostController extends Controller
      $id = Auth::id();
      Post::create([
          "user_id"=> $id,
+         "title" =>$request->title,
          "text" =>$request->text,
          "photo" =>'/Storage/Posts/'.$new_file,
          // "user_id"=> Auth::id(),
@@ -113,6 +119,7 @@ class PostController extends Controller
     {
        //make Validation for Posts
        $this->validate($request,[
+           'title'=>'required',
         'text'=>'required',
         'photo'=>'required',
     ]);
@@ -128,6 +135,7 @@ class PostController extends Controller
  //  $p = Post::all();
  $post = Post::find($post_id);
  $post->update([
+     "title" =>$request->title,
      "text" =>$request->text,
      "photo" =>'/Storage/Posts/'.$new_file,
      // "user_id"=> Auth::id(),
