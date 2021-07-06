@@ -20,27 +20,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-##################### Begain Route for Posts ########################################
-Route::group(['prefix' => 'posts'], function () {
-
-Route::get('create', [PostController::class,'create']);
-Route::post('store', [PostController::class,'store'])->name('posts.store');
-
-Route::get('all', [PostController::class,'index'])->name('posts.all');
-
-Route::get('edit/{post_id}' , [PostController::class,'edit']);
-Route::post('update/{post_id}', [PostController::class,'update'])->name('posts.update');
-
-Route::get('delete/{post_id}' , [PostController::class,'delete']);
-
-//Route::get('likes/{post_id}', 'PostController@getLike') ->middleware('auth');
-
-//Route::get('like/{post_id}',  [LikeController::class,'likes']);
-
-Route::get('like/{post_id}',  [PostController::class,'viewLike']);
-});
-##################### End Route for Posts ########################################
+Route::get('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
+Route::resource('posts', PostController::class);
+##################### Begain Route for posts ########################################
+//Route::group(['prefix' => 'posts'], function () {
+//
+//Route::get('create', [PostController::class,'create']);
+//Route::post('store', [PostController::class,'store'])->name('posts.store');
+//
+//Route::get('all', [PostController::class,'index'])->name('posts.all');
+//
+//Route::get('edit/{post_id}' , [PostController::class,'edit']);
+//Route::post('update/{post_id}', [PostController::class,'update'])->name('posts.update');
+//
+//Route::get('delete/{post_id}' , [PostController::class,'delete']);
+//
+////Route::get('likes/{post_id}', 'PostController@getLike') ->middleware('auth');
+//
+////Route::get('like/{post_id}',  [LikeController::class,'likes']);
+//
+//Route::get('like/{post_id}',  [PostController::class,'viewLike']);
+//});
+##################### End Route for posts ########################################
 
 
 

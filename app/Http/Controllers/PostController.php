@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Like;
+use Auth;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -15,26 +15,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        //select all Posts for show them
-        $posts = Post::select('id','title','text','photo')->paginate(2);
-        return View('Posts.index',compact('posts'));
+        //select all posts for show them
+        $posts = Post::query()->paginate(2);
+
+        return View('posts.index', compact('posts'));
     }
-
-    // Like Post by User
-    public function viewLike($post_id)
-    {
-
-        $like = new LikeController();
-        $like->likes($post_id);
-
-        $post = Post::find($post_id);
-        $likCtr = Like::where(['post_id' => $post->id])->count();
-
-        $post->comments()->get();
-        return view('Posts.DetailsPost',compact('post','likCtr'));
-    }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -43,125 +28,119 @@ class PostController extends Controller
      */
     public function create()
     {
-        return View('Posts.create');
-     }
+        return View('posts.create');
+    }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
 
     public function store(Request $request)
     {
-
-        //make Validation for Posts
-      $this->validate($request,[
-          'title'=>'required',
-            'text'=>'required',
-            'photo'=>'required',
-        ]);
-//dd('test');
-
-       if($request->hasFile('photo')){
-           $file = $request->file('photo');
-           $new_file = time().$file->getClientOriginalName();
-           $file->move('Storage/Posts/',$new_file);
-
-       }
-
-     $id = Auth::id();
-     Post::create([
-         "user_id"=> $id,
-         "title" =>$request->title,
-         "text" =>$request->text,
-         "photo" =>'/Storage/Posts/'.$new_file,
-         // "user_id"=> Auth::id(),
+        //make Validation for posts
+        $this->validate($request, [
+            'title' => 'required|string',
+            'text' => 'required|string',
+            'photo' => 'file',
         ]);
 
-      //  return View('welcome')->with(['success' => 'تمت اضافة العنصر بنجاح']);
-   return redirect()->back()->with(['success' => 'تمت اضافة العنصر بنجاح']);
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $new_file = time() . $file->getClientOriginalName();
+            $file->move('Storage/posts/', $new_file);
+        }
+
+        $userId = Auth::id();
+        Post::create([
+            "user_id" => $userId,
+            "title" => $request->title,
+            "text" => $request->text,
+            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : null,
+        ]);
+
+        return redirect()->route('posts.index')->with(['success' => __('Added successfully')]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
     {
-        //
+        return View('posts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($post_id)
+    public function edit(Post $post)
     {
-
-       $post = Post::find($post_id);
-       return view('Posts.edite',compact('post'));
+        return view('posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $post_id)
+    public function update(Request $request, Post $post)
     {
-       //make Validation for Posts
-       $this->validate($request,[
-           'title'=>'required',
-        'text'=>'required',
-        'photo'=>'required',
-    ]);
-//dd('test');
+        //make Validation for posts
+        $this->validate($request, [
+            'title' => 'required|string',
+            'text' => 'required|string',
+            'photo' => 'file',
+        ]);
 
-   if($request->hasFile('photo')){
-       $file = $request->file('photo');
-       $new_file = time().$file->getClientOriginalName();
-       $file->move('Storage/Posts/',$new_file);
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $new_file = time() . $file->getClientOriginalName();
+            $file->move('Storage/posts/', $new_file);
+        }
 
-   }
+        $post->update([
+            "title" => $request->title,
+            "text" => $request->text,
+            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : $post->photo,
+        ]);
 
- //  $p = Post::all();
- $post = Post::find($post_id);
- $post->update([
-     "title" =>$request->title,
-     "text" =>$request->text,
-     "photo" =>'/Storage/Posts/'.$new_file,
-     // "user_id"=> Auth::id(),
-    ]);
-
-  //  return View('welcome')->with(['success' => 'تمت اضافة العنصر بنجاح']);
-return redirect()->back()->with(['success' => 'تمت اضافة العنصر بنجاح']);
- }
-
+        return redirect()->route('posts.index')->with(['success' => __('Updated successfully')]);
+    }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function delete($post_id)
+    public function destroy(Post $post)
     {
-       $post = Post::find($post_id);
-       $post ->comments() -> delete();
-       $post->delete();
-       return redirect()->back()->with(['success' => 'تمت حذف العنصر بنجاح']);
+        $post->comments()->delete();
+        $post->delete();
+        return redirect()->back()->with(['success' => __('Deleted successfully')]);
     }
 
-public  function getLike(){
+    public function like(Post $post)
+    {
+        $userId = Auth::id();
+        if (!$post->likes()->where('user_id', $userId)->exists()) {
+            $post->likes()->create([
+                'user_id' => $userId,
+            ]);
+        } else {
+            $post->likes()->where('user_id', $userId)->delete();
+        }
 
-}
-
+        return redirect()->route('posts.index');
+    }
 }

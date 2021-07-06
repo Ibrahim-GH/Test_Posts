@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Like extends Model
+class Like extends Pivot
 {
+    protected $table = 'likes';
+
     protected $fillable = [
-        'id', 'counter', 'user_id','post_id','created_at','updated_at',
+        'user_id', 'post_id',
     ];
 
     /**
@@ -16,27 +19,21 @@ class Like extends Model
      *
      * @var array
      */
-    protected $hidden = [
-        'created_at','updated_at',
-    ];
-    use HasFactory;
+    protected $hidden = [];
 
-     ########################### The Relation for Likes ###############################
+    ########################### The Relation for Likes ###############################
 
 
-
-    //the post hase many like and like belong to one post
-    public function posts()
+    //the post has many like and like belong to one post
+    public function post()
     {
-        return $this -> belongsTo('App\Models\Post' , 'post_id' , 'id');
+        return $this->belongsTo(Post::class, 'post_id', 'id');
     }
 
 
-    //the user hase many like and like belong to one user
-    public function users()
+    //the user has many like and like belong to one user
+    public function user()
     {
-        return $this -> belongsTo('App\Models\User' , 'user_id' , 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-
 }

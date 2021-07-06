@@ -41,25 +41,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    
+
     ########################### The Relation for Users ###############################
 
 
-    //the user hase many post and post belong to one user
+    //the user has many post and post belong to one user
     public function posts()
     {
-       return $this -> hasMany('App\Models\Post','user_id','id');
-    }  
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
 
-    //the user hase many comment and comment belong to one user
+    //the user has many comment and comment belong to one user
     public function comments()
     {
-      return $this -> hasMany('App\Models\Comment','user_id','id');
-    }  
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
 
-     //the user hase many like and like belong to one user
-   public function likes()
-   {
-      return $this -> hasMany('App\Models\Likes','user_id','id');
-   }  
+    //the user has many like and like belong to one user
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'user_id', 'id');
+    }
 }

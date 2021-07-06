@@ -44,7 +44,7 @@ class CommentController extends Controller
     public function store(Request $request , $post_id)
     {
 
-        //make Validation for Posts
+        //make Validation for posts
       $this->validate($request,[
             'text'=>'required',
             'photo'=>'required',
@@ -56,7 +56,7 @@ class CommentController extends Controller
            $new_file = time().$file->getClientOriginalName();
            $file->move('Storage/Comments/',$new_file);
        }
-       
+
 
       $id =  Auth::id();
     Comment::create([
@@ -104,7 +104,7 @@ class CommentController extends Controller
     public function update(Request $request, $comment_id)
     {
 
-       //make Validation for Posts
+       //make Validation for posts
        $this->validate($request,[
         'text'=>'required',
         'photo'=>'required',

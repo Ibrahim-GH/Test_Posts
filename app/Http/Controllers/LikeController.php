@@ -30,7 +30,7 @@ class LikeController extends Controller
         return $likCtr;
     }
     else{
-        return view('Posts.index');
+        return view('posts.index');
     }
 
     }

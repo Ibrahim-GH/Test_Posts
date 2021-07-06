@@ -16,7 +16,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'id','user_id','title', 'text', 'photo','created_at','updated_at',
+        'user_id', 'title', 'text', 'photo'
     ];
 
     /**
@@ -24,30 +24,26 @@ class Post extends Model
      *
      * @var array
      */
-    protected $hidden = [
-        'created_at','updated_at',
-    ];
+    protected $hidden = [];
 
 
-    ########################### The Relation for Posts ###############################
+    ########################### The Relation for posts ###############################
 
-    //the user hase many posts and post belong to one user
+    //the user has many posts and post belong to one user
     public function user()
     {
-        return $this -> belongsIo('App\Models\User','user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    //the post hase many comment and comment belong to one post
-public function comments()
-{
-    return $this -> hasMany('App\Models\Comment','post_id','id');
-}
+    //the post has many comment and comment belong to one post
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id', 'id');
+    }
 
-//the post hase many like and like belong to one post
-public function likes()
-{
-    return $this -> hasMany('App\Models\Likes','post_id','id');
-}
-
-
+    //the post has many like and like belong to one post
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'post_id', 'id');
+    }
 }

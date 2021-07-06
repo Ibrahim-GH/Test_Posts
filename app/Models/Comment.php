@@ -7,34 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    use HasFactory;
 
     protected $fillable = [
-        'id', 'text','user_id','post_id','photo','created_at','updated_at',
+        'text', 'user_id', 'post_id', 'photo',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'created_at','updated_at',
-    ];
-    use HasFactory;
+    protected $hidden = [];
 
     ########################### The Relation for Comments ###############################
 
-//the post hase many comment and comment belong to one post
-    public function posts()
+    //the post has many comment and comment belong to one post
+    public function post()
     {
-        return $this -> belongsTo('App\Models\Post' , 'post_id' , 'id');
+        return $this->belongsTo(Post::class, 'post_id', 'id');
     }
 
-
-    //the user hase many comment and comment belong to one user
-    public function users()
+    //the user has many comment and comment belong to one user
+    public function user()
     {
-        return $this -> belongsTo('App\Models\User' , 'user_id' , 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
 }
