@@ -59,8 +59,8 @@ class PostController extends Controller
             "user_id" => $userId,
             "title" => $request->title,
             "text" => $request->text,
-            "photo" => '/Storage/posts/'.$new_file,
-//            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : null,
+            //"photo" => '/Storage/posts/'.$new_file,
+            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : null,
         ]);
 
         return redirect()->route('posts.index')->with(['success' => __('Added successfully')]);
@@ -127,7 +127,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->comments()->delete();
+        //dd($post->id);
+       $post->comments()->delete();
+       $post->likes()->delete();
         $post->delete();
         return redirect()->back()->with(['success' => __('Deleted successfully')]);
     }

@@ -21,26 +21,27 @@ Route::get('/', function () {
 
 ##################### Begain Route for posts ########################################
 Route::get('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
+Route::get('posts/delete/{post}', [PostController::class,'destroy'])->name('posts.delete');
 Route::resource('posts', PostController::class);
 ##################### End Route for posts ########################################
 
 //Route::get('comments/{post}/like', [PostController::class, 'like'])->name('comments.like');
 //Route::post('comments/{post_id}', [CommentController::class, 'store'])->name('comments.store');
-Route::resource('comments', CommentController::class)->except(['index','create','show']);
+//Route::resource('comments', CommentController::class)->except(['index','create','show']);
 
 ##################### Begain Route for Comments ########################################
-//Route::group(['prefix' => 'comments'], function () {
-//
+Route::group(['prefix' => 'comments'], function () {
+
 //Route::get('create/{post_id}', [CommentController::class,'create']);
-//Route::post('store/{post_id}', [CommentController::class,'store'])->name('comments.store');
-//
-//Route::get('all/{post_id}', [CommentController::class,'index'])->name('comments.all');
-//
-//Route::get('edit/{comment_id}', [CommentController::class,'edit']);
-//Route::post('update/{comment_id}', [CommentController::class,'update'])->name('comments.update');
-//
-//Route::get('delete/{comment_id}' , [CommentController::class,'delete'])->name('comment.delete');
-//});
+Route::post('store/{post}', [CommentController::class,'store'])->name('comments.store');
+
+//Route::get('index/{post_id}', [CommentController::class,'index'])->name('comments.index');
+
+Route::get('edit/{comment_id}', [CommentController::class,'edit']);
+Route::get('update/{comment_id}', [CommentController::class,'update'])->name('comments.update');
+
+Route::get('destroy/{comment_id}' , [CommentController::class,'destroy'])->name('comments.destroy');
+});
 
 ##################### End Route for Comments ########################################
 

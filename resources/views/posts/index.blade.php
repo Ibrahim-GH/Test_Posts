@@ -35,11 +35,10 @@
 
                         </div>
                         <a href="{{route('posts.edit',['post'=> $post->id])}}" class="btn btn-primary">Edit</a>
-                        <a href="{{route('posts.show', ['post' => $post->id])}}" class="btn btn-success">view
-                            details</a>
-                        <a href="{{route('posts.destroy', ['post' => $post->id])}}" class="btn btn-danger">Delete</a>
+                        <a href="{{route('posts.show', ['post' => $post->id])}}" class="btn btn-success">view details</a>
                         <a href="{{route('posts.like', ['post' => $post->id])}}" class="btn btn-block btn-primary">
                             <i class="fa fa-thumbs-up">Like ({{$post->likes()->count()}})</i></a>
+                        <a href="{{route('posts.delete',['post' => $post->id])}}" class="btn btn-danger">Delete</a>
                     </div>
                 </li>
             </ul>
