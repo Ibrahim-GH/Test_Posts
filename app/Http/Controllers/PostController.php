@@ -16,7 +16,8 @@ class PostController extends Controller
     public function index()
     {
         //select all posts for show them
-        $posts = Post::query()->paginate(2);
+        $posts = Post::all();
+            //query()->paginate(2);
 
         return View('posts.index', compact('posts'));
     }
@@ -58,7 +59,8 @@ class PostController extends Controller
             "user_id" => $userId,
             "title" => $request->title,
             "text" => $request->text,
-            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : null,
+            "photo" => '/Storage/posts/'.$new_file,
+//            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : null,
         ]);
 
         return redirect()->route('posts.index')->with(['success' => __('Added successfully')]);

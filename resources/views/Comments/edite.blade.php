@@ -1,11 +1,10 @@
+
 @extends('layouts.my_app')
 
 @section('content')
 
-    <form method="POST" action="{{route('comments.update',['comment_id'=> $comment->id])}}" enctype="multipart/form-data">
+    <form method="PUT" action="{{url('comments/{comment}')}}" enctype="multipart/form-data">
             @csrf
-            <!-- {{-- <input name="_token" value="{{csrf_token()}}"> --}} -->
-
 
             <div class="form-group" >
                 <label for="formFileLg" class="form-label">Update The Comment Text</label>

@@ -9,32 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
-
-    public function likes($post_id){
-
-
-        $post = Post::find($post_id);
-        $likCtr = Like::where(['post_id' => $post->id])->count();
-
-        $loggedin_user = Auth::user()->id;
-     $like_user = Like::where(['user_id' => $loggedin_user ,'post_id' => $post_id])->first();
-    if(empty($like_user->user_id)){
-        $user_id = Auth::user()->id;
-        $post_id = $post_id;
-        $like = new like;
-        $like->user_id = $user_id;
-        $like->post_id = $post_id;
-        $like->save();
-
-
-        return $likCtr;
-    }
-    else{
-        return view('posts.index');
-    }
-
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -54,6 +28,7 @@ class LikeController extends Controller
     {
         //
     }
+
 
     /**
      * Store a newly created resource in storage.
