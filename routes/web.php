@@ -19,31 +19,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-##################### Begain Route for posts ########################################
-Route::get('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
-Route::get('posts/delete/{post}', [PostController::class,'destroy'])->name('posts.delete');
-Route::resource('posts', PostController::class);
-##################### End Route for posts ########################################
+// route for multi language
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){
 
-//Route::get('comments/{post}/like', [PostController::class, 'like'])->name('comments.like');
-//Route::post('comments/{post_id}', [CommentController::class, 'store'])->name('comments.store');
-//Route::resource('comments', CommentController::class)->except(['index','create','show']);
+    //route for posts
+    Route::get('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
+    Route::get('posts/delete/{post}', [PostController::class, 'destroy'])->name('posts.delete');
+    Route::resource('posts', PostController::class);
 
-##################### Begain Route for Comments ########################################
-Route::group(['prefix' => 'comments'], function () {
 
-//Route::get('create/{post_id}', [CommentController::class,'create']);
-Route::post('store/{post}', [CommentController::class,'store'])->name('comments.store');
+    //route for comments
+    Route::group(['prefix' => 'comments'], function () {
 
-//Route::get('index/{post_id}', [CommentController::class,'index'])->name('comments.index');
+        Route::post('store/{post}', [CommentController::class, 'store'])->name('comments.store');
 
-Route::get('edit/{comment_id}', [CommentController::class,'edit']);
-Route::get('update/{comment_id}', [CommentController::class,'update'])->name('comments.update');
+        Route::get('edit/{comment_id}', [CommentController::class, 'edit']);
+        Route::get('update/{comment_id}', [CommentController::class, 'update'])->name('comments.update');
 
-Route::get('destroy/{comment_id}' , [CommentController::class,'destroy'])->name('comments.destroy');
+        Route::get('destroy/{comment_id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    });
+
 });
-
-##################### End Route for Comments ########################################
 
 
 Auth::routes();

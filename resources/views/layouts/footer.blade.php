@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="page-foot er font-small unique-color-dark pt-4" style="margin-top: 300px;">
+<footer class="page-foot er font-small unique-color-dark pt-4" style="margin-top: 300px; background-color: #494f54 ">
 
     <!-- Footer Elements -->
     <div class="container">
