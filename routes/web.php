@@ -28,7 +28,7 @@ Route::group(
 
     //route for posts
     Route::get('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
-    Route::get('posts/delete/{post}', [PostController::class, 'destroy'])->name('posts.delete');
+//    Route::get('posts/delete/{post}', [PostController::class, 'destroy'])->name('posts.delete');
     Route::resource('posts', PostController::class);
 
 

@@ -1,10 +1,11 @@
 @extends('layouts.my_app')
 
 @section('content')
-
-    <a class="btn btn-primary" type="submit" href="{{url('posts/create')}}"
-       class="btn btn-primary"> {{__('message.Create')}}</a>
-
+    @can('create', \App\Models\Post::class)
+        <a class="btn btn-primary" type="submit" href="{{url('posts/create')}}"
+           class="btn btn-primary"> {{__('message.Create')}}
+        </a>
+    @endcan
     @foreach($posts as $post)
         <nav>
             <ul class="nav nav-pills">
@@ -18,16 +19,23 @@
                                  alt="Card image cap">
 
                         </div>
-                        <a href="{{route('posts.edit',['post'=> $post->id])}}"
-                           class="btn btn-primary">{{__('message.Edit')}}</a>
+                        @can('update', $post)
+                            <a href="{{route('posts.edit',['post'=> $post->id])}}"
+                               class="btn btn-primary">{{__('message.Edit')}}</a>
+                        @endcan
                         <a href="{{route('posts.show', ['post' => $post->id])}}"
                            class="btn btn-success">{{__('message.view details')}}</a>
-                        <a href="{{route('posts.like', ['post' => $post->id])}}" class="btn btn-block btn-primary">
-                            <i class="fa fa-thumbs-up">{{__('message.Like')}} ({{$post->likes()->count()}})</i></a>
-                        <form action="{{route('posts.delete',['post' => $post->id])}}">
-                            @method('delete')
-                            <button class="btn btn-danger">{{__('message.Delete')}}</button>
-                        </form>
+
+                        @auth()
+                            <a href="{{route('posts.like', ['post' => $post->id])}}" class="btn btn-block btn-primary">
+                                <i class="fa fa-thumbs-up">{{__('message.Like')}} ({{$post->likes()->count()}})</i></a>
+                        @endauth
+                        @can('delete', $post)
+                            <form action="{{route('posts.destroy',['post' => $post->id])}}">
+                                @method('delete')
+                                <button class="btn btn-danger">{{__('message.Delete')}}</button>
+                            </form>
+                        @endcan
                     </div>
                 </li>
             </ul>
