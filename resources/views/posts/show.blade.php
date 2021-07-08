@@ -9,14 +9,6 @@
     <a>
         <span class="fa fa-thumbs-up">Like({{$post->likes()->count()}})</span>
     </a>
-
-    <a>
-        <span class="fa fa-thumbs-up">Edit</span>
-    </a>
-
-    <a>
-        <span class="fa fa-thumbs-up">Delete</span>
-    </a>
     <h3>This is Post</h3>
     <br></br>
     <br></br>
@@ -29,36 +21,49 @@
                 <img style="width: 90px; height: 90px;" src="{{asset($comment->photo)}}"/>
             @endif
             <h5>{{$comment->created_at}}</h5>
-            <a href="{{url('comments/edit',['$comment_id'=>$comment->id])}}" class="btn btn-success"> Edit</a>
-            <a href="{{url('comments/destroy',['$comment_id'=>$comment->id])}}" class="btn btn-danger"> Delete</a>
+            @can('update',$comment)
+                <a href="{{route('comments.edit',$comment->id)}}" class="btn btn-success"> Edit</a>
+            @endcan
+
+            @can('delete', $comment)
+                <form method="post" action="{{route('comments.destroy',$comment->id)}}">
+                    @method('delete')
+                    @csrf
+                    <button class="btn btn-danger">
+                        Delete
+                    </button>
+                </form>
+            @endcan
+
         </div>
         <br/>
         <br/>
         <br/>
     @endforeach
 
-    <form method="POST" action="{{url('comments/store',['post'=> $post->id])}}" >
-{{--        @method('POST')--}}
-    @csrf
+    @can('create',\App\Models\Comment::class)
+        <form method="POST" action="{{route('comments.store')}}">
+            @csrf
 
-        <input name="post" type="hidden" value="{{$post->id}}" >
-        <div class="form-group" >
-            <label for="exampleInputEmail1">Enter The Comment Text</label>
-            <input type="text" class="form-control" name="text">
-        <!-- @error('photo')
-            <small class="form-text text-danger">{{$message}}</small>
-                @enderror -->
-        </div>
+            <input name="post_id" type="hidden" value="{{$post->id}}">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Enter The Comment Text</label>
+                <input type="text" class="form-control" name="text">
+                @error('text')
+                <small class="form-text text-danger">{{$message}}</small>
+                @enderror
+            </div>
 
-        <div class="form-group">
-            <label for="exampleInputEmail1">Enter The Comment photo</label>
-            <input type="file" for="formFileLg" class="form-label" name="photo">
-{{--         @error('photo')--}}
-{{--            <small class="form-text text-danger">{{$message}}</small>--}}
-{{--                @enderror--}}
-        </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Enter The Comment photo</label>
+                <input type="file" for="formFileLg" class="form-label" name="photo">
+                @error('photo')
+                <small class="form-text text-danger">{{$message}}</small>
+                @enderror
+            </div>
 
-        <button type="submit" class="btn btn-primary">Create</button>
-    </form>
+            <button type="submit" class="btn btn-primary">{{__('Create')}}}</button>
+        </form>
+    @endcan
 
 @endsection

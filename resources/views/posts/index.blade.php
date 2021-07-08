@@ -31,8 +31,9 @@
                                 <i class="fa fa-thumbs-up">{{__('message.Like')}} ({{$post->likes()->count()}})</i></a>
                         @endauth
                         @can('delete', $post)
-                            <form action="{{route('posts.destroy',['post' => $post->id])}}">
+                            <form method="post" action="{{route('posts.destroy',['post' => $post->id])}}">
                                 @method('delete')
+                                @csrf
                                 <button class="btn btn-danger">{{__('message.Delete')}}</button>
                             </form>
                         @endcan

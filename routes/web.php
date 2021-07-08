@@ -23,8 +23,8 @@ Route::get('/', function () {
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
-    ], function(){
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    ], function () {
 
     //route for posts
     Route::get('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
@@ -33,15 +33,17 @@ Route::group(
 
 
     //route for comments
-    Route::group(['prefix' => 'comments'], function () {
-
-        Route::post('store/{post}', [CommentController::class, 'store'])->name('comments.store');
-
-        Route::get('edit/{comment_id}', [CommentController::class, 'edit']);
-        Route::get('update/{comment_id}', [CommentController::class, 'update'])->name('comments.update');
-
-        Route::get('destroy/{comment_id}', [CommentController::class, 'destroy'])->name('comments.destroy');
-    });
+    Route::resource('comments', CommentController::class)
+        ->only(['store', 'edit', 'update', 'destroy']);
+//    Route::group(['prefix' => 'comments'], function () {
+//
+//        Route::post('store/{post}', [CommentController::class, 'store'])->name('comments.store');
+//
+//        Route::get('edit/{comment_id}', [CommentController::class, 'edit']);
+//        Route::get('update/{comment_id}', [CommentController::class, 'update'])->name('comments.update');
+//
+//        Route::get('destroy/{comment_id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+//    });
 
 });
 

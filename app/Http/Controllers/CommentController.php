@@ -9,29 +9,10 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function index($post_id)
-//    {
-//        $post = Post::find($post_id);
-//
-//        $comments =$post->comments;
-//
-//        return View('Comments.index',compact('post', 'comments'));
-//    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create($post_id)
+    public function __construct()
     {
-        $post = Post::find($post_id);
-        return View('Comments.create', compact('post'));
+        $this->authorizeResource(Comment::class, 'comment');
     }
 
     /**
@@ -43,42 +24,28 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
-
-        //dd($request->all());
         //make Validation for posts
         $this->validate($request, [
-            'text' => 'required',
-            'photo' => 'required',
+            'post_id' => 'required|exists:posts,id',
+            'text' => 'required|string',
+            'photo' => 'file|nullable',
         ]);
 
-        $new_file = '';
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $new_file = time() . $file->getClientOriginalName();
             $file->move('Storage/comments/', $new_file);
         }
+
         $id = Auth::id();
         Comment::create([
             "user_id" => $id,
-            "post_id" => $request->post,
+            "post_id" => $request->post_id,
             "text" => $request->text,
             "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : null,
-            //"photo" => '/Storage/comments/' . $new_file,
         ]);
 
         return redirect()->back()->with(['success' => 'تمت اضافة العنصر بنجاح']);
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Comment $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
     }
 
     /**
@@ -87,11 +54,9 @@ class CommentController extends Controller
      * @param \App\Models\comment $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($comment_id)
+    public function edit(Comment $comment)
     {
-        //dd($comment_id);
-        $comment = Comment::find($comment_id);
-        return view('Comments.edite', compact('comment'));
+        return view('Comments.edit', compact('comment'));
     }
 
     /**
@@ -101,33 +66,27 @@ class CommentController extends Controller
      * @param \App\Models\Comment $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Comment $comment)
     {
        //   dd($request->all());
         //make Validation for posts
         $this->validate($request, [
-            'text' => 'required',
-            'photo' => 'required',
+            'text' => 'required|string',
+            'photo' => 'file|nullable',
         ]);
 
-        $new_file = '';
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $new_file = time() . $file->getClientOriginalName();
             $file->move('Storage/Comments/', $new_file);
         }
 
-
-        $id = $request->comment_id;
-        $coment = Comment::find($id);
-
-        $coment->update([
+        $comment->update([
             "text" => $request->text,
-            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : $post->photo,
-            //"photo" => '/Storage/Comments/' . $new_file,
+            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : $comment->photo,
         ]);
 
-        return redirect()->back()->with(['success' => 'تمت اضافة العنصر بنجاح']);
+        return redirect()->route('posts.show',$comment->post_id)->with(['success' => 'تمت اضافة العنصر بنجاح']);
     }
 
 
@@ -137,10 +96,9 @@ class CommentController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($comment_id)
+    public function destroy(Comment $comment)
     {
         // dd($comment_id);
-        $comment = Comment::find($comment_id);
         $comment->delete();
         return redirect()->back()->with(['success' => 'تمت حذف العنصر بنجاح']);
     }
