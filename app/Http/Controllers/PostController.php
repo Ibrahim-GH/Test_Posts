@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Traits\MyTraits;
 use Auth;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
+
 class PostController extends Controller
 {
+    use MyTraits;
 
     public function __construct()
     {
@@ -49,19 +52,15 @@ class PostController extends Controller
     {
         //make Validation from postRequest
 
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-            $new_file = time() . $file->getClientOriginalName();
-            $file->move('Storage/posts/', $new_file);
-        }
+        //save Photo with Trait MyTrait
+        $file_name = $this->saveImage($request->photo, 'Storage/posts');
 
         $userId = Auth::id();
         Post::create([
             "user_id" => $userId,
             "title" => $request->title,
             "text" => $request->text,
-            //"photo" => '/Storage/posts/'.$new_file,
-            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : null,
+            "photo" => isset($file_name) ? '/Storage/posts/' . $file_name : null,
         ]);
 
         return redirect()->route('posts.index')->with(['success' => __('Added successfully')]);
@@ -100,16 +99,13 @@ class PostController extends Controller
     {
         //make Validation from postRequest
 
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-            $new_file = time() . $file->getClientOriginalName();
-            $file->move('Storage/posts/', $new_file);
-        }
+        //save Photo with Trait MyTrait
+        $file_name = $this->saveImage($request->photo, 'Storage/posts');
 
         $post->update([
             "title" => $request->title,
             "text" => $request->text,
-            "photo" => isset($new_file) ? '/Storage/posts/' . $new_file : $post->photo,
+            "photo" => isset($file_name) ? '/Storage/posts/' . $file_name : $post->photo,
         ]);
 
         return redirect()->route('posts.index')->with(['success' => __('Updated successfully')]);

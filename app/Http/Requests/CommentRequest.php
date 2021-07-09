@@ -26,7 +26,6 @@ class CommentRequest extends FormRequest
     {
         return [
             'text' => 'required|string',
-            'photo' => 'file|nullable',
         ];
     }
 
