@@ -19,6 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // route for multi language
 Route::group(
     [
@@ -28,22 +29,11 @@ Route::group(
 
     //route for posts
     Route::get('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
-//    Route::get('posts/delete/{post}', [PostController::class, 'destroy'])->name('posts.delete');
     Route::resource('posts', PostController::class);
-
 
     //route for comments
     Route::resource('comments', CommentController::class)
         ->only(['store', 'edit', 'update', 'destroy']);
-//    Route::group(['prefix' => 'comments'], function () {
-//
-//        Route::post('store/{post}', [CommentController::class, 'store'])->name('comments.store');
-//
-//        Route::get('edit/{comment_id}', [CommentController::class, 'edit']);
-//        Route::get('update/{comment_id}', [CommentController::class, 'update'])->name('comments.update');
-//
-//        Route::get('destroy/{comment_id}', [CommentController::class, 'destroy'])->name('comments.destroy');
-//    });
 
 });
 

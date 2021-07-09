@@ -5,7 +5,7 @@
         @method('PUT')
         @csrf
         <div class="form-group">
-            <label for="exampleInputEmail1">Update The Post Title</label>
+            <label for="exampleInputEmail1">{{__('message.Update The Post Title')}}</label>
             <input type="text" class="form-control" name="title" value="{{$post->title}}">
             @error('title')
             <small class="form-text text-danger">{{$message}}</small>
@@ -13,7 +13,7 @@
         </div>
 
         <div class="form-group">
-            <label for="exampleInputEmail1">Update The Post Text</label>
+            <label for="exampleInputEmail1">{{__('message.Update The Post Text')}}</label>
             <input type="text" class="form-control" name="text" value="{{$post->text}}">
             @error('text')
             <small class="form-text text-danger">{{$message}}</small>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="form-group">
-            <label for="exampleInputEmail1">Update The Post photo</label>
+            <label for="exampleInputEmail1">{{__('message.Update The Post photo')}}</label>
             <input type="file" for="formFileLg" class="form-label" name="photo" value="{{$post->photo}}">
             <img src="{{asset($post->photo)}}" style="width: 90px; height: 90px;"/>
             @error('photo')
@@ -29,7 +29,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">{{__('message.Update')}}</button>
     </form>
 
 @endsection

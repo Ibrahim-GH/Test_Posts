@@ -8,7 +8,7 @@
 
         <input name="comment_id" type="hidden" value="{{$comment->id}}">
         <div class="form-group">
-            <label for="formFileLg" class="form-label">Update The Comment Text</label>
+            <label for="formFileLg" class="form-label">{{__('message.Update The Comment Text')}}</label>
             <input type="text" class="form-control" name="text" value="{{$comment->text}}">
             @error('text')
             <small class="form-text text-danger">{{$message}}</small>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group">
-            <label for="formFileLg" class="form-label">Update The Comment photo</label>
+            <label for="formFileLg" class="form-label">{{__('message.Update The Comment photo')}}</label>
             <input type="file" class="form-control form-control-lg" name="photo" value="{{$comment->photo}}">
             <img src="{{asset($comment->photo)}}" style="width: 90px; height: 90px;"/>
             @error('photo')
@@ -24,7 +24,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">{{__('message.Update')}}Update</button>
     </form>
 
 @endsection

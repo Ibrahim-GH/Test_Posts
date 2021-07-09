@@ -21,9 +21,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //select all posts for show them
-        $posts = Post::all();
-            //query()->paginate(2);
+        //select pagination posts for show them
+        $posts = Post::paginate(5);
 
         return View('posts.index', compact('posts'));
     }
