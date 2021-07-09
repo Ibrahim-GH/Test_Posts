@@ -14,7 +14,7 @@ use App\Http\Controllers\CommentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+define('PAGINATION_COUNT',3);
 Route::get('/', function () {
     return view('welcome');
 });
