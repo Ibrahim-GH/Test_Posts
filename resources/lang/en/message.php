@@ -37,9 +37,11 @@ return [
     'Update The Comment Text' => 'Update The Comment Text',
     'Update The Comment photo' => 'Update The Comment photo',
     'Update' => 'Update',
-    'Save' => 'Save',
-    'Save' => 'Save',
-    'Save' => 'Save',
-
+    'title post is required' => 'title post is required',
+    'title post is string' => 'title post is string',
+    'text post is required' => 'text post is required',
+    'text post is string' => 'text post is string',
+    'text comment is required' => 'text comment is required',
+    'text comment is string' => 'text comment is string',
 
 ];

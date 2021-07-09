@@ -38,5 +38,11 @@ return [
     'Update The Comment Text' => 'أدخل نص تعليقك',
     'Update The Comment photo' => 'أدخل صورة تعليقك',
     'Update' => 'تعديل',
+    'title post is required' => 'عنوان المنشور مطلوب',
+    'title post is string' => 'عنوان المنشور يجب أن يكون أحرف',
+    'text post is required' => 'نص المنشور مطلوب',
+    'text post is string' => 'نص المنشور يجب أن يكون أحرف',
+    'text comment is required' => 'نص التعليق مطلوب',
+    'text comment is string' => 'نص التعليق يجب ان يكون أحرف',
 
 ];

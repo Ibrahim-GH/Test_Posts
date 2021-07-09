@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use Auth;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -44,14 +45,14 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         //make Validation for posts
-        $this->validate($request, [
-            'title' => 'required|string',
-            'text' => 'required|string',
-            'photo' => 'file',
-        ]);
+//        $this->validate($request, [
+//            'title' => 'required|string',
+//            'text' => 'required|string',
+//            'photo' => 'file',
+//        ]);
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
