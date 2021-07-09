@@ -13,7 +13,7 @@ class CommentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -33,7 +33,6 @@ class CommentRequest extends FormRequest
 
     public function messages()
     {
-
         return [
             'text.required' => __('message.text comment is required'),
             'text.string' => __('message.text comment is string'),

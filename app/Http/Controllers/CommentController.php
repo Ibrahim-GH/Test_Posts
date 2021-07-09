@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use Auth;
 use App\Models\Post;
 use App\Models\Comment;
@@ -22,14 +23,9 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
-        //make Validation for posts
-        $this->validate($request, [
-            'post_id' => 'required|exists:posts,id',
-            'text' => 'required|string',
-            'photo' => 'file|nullable',
-        ]);
+        //make Validation from CommentRequest
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
@@ -66,14 +62,9 @@ class CommentController extends Controller
      * @param \App\Models\Comment $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(CommentRequest $request, Comment $comment)
     {
-       //   dd($request->all());
-        //make Validation for posts
-        $this->validate($request, [
-            'text' => 'required|string',
-            'photo' => 'file|nullable',
-        ]);
+        //make Validation from CommentRequest
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');

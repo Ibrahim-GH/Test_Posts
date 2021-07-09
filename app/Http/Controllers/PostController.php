@@ -47,12 +47,7 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-        //make Validation for posts
-//        $this->validate($request, [
-//            'title' => 'required|string',
-//            'text' => 'required|string',
-//            'photo' => 'file',
-//        ]);
+        //make Validation from postRequest
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
@@ -101,14 +96,9 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequestRequest $request, Post $post)
     {
-        //make Validation for posts
-        $this->validate($request, [
-            'title' => 'required|string',
-            'text' => 'required|string',
-            'photo' => 'file',
-        ]);
+        //make Validation from postRequest
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
